@@ -3,17 +3,17 @@ import { join } from 'path';
 
 const home = join(...[homedir(), '.corebos']);
 
-/** Get the path of the bos storage directory
+/** Writes credentials paths to disk
+ *
+ * @param {
+ * file: <File Name String>
+ * }
+ *
+ * @returns {
+ * path: <Joined Path String>
+ * }
+ */
 
-  {
-    file: <File Name String>
-  }
-
-  @returns
-  {
-    path: <Home Directory Path String>
-  }
-*/
 const homePath = ({ file }) => {
   const dir = home;
 

@@ -4,8 +4,19 @@ import putSavedCredentials from './put_saved_credentials.js';
 
 const defaultSavedNodeName = 'coreln';
 
+/** Ask for paths to save credentials
+ *
+ * @param {
+ * ask: <InquirerAskFunction>
+ * logger: <WinstonLoggerObject>
+ * }
+ *
+ * @returns
+ */
+
 const askPaths = async ({ ask, logger }) => {
   return await auto({
+    // Check arguments
     validate: cbk => {
       if (!ask) {
         return cbk([400, 'ExpectedAskFunctionForAskingPaths']);
@@ -18,6 +29,7 @@ const askPaths = async ({ ask, logger }) => {
       return cbk();
     },
 
+    // Ask ca.pem path
     askCaPemPath: [
       'validate',
       ({}, cbk) => {
@@ -31,7 +43,6 @@ const askPaths = async ({ ask, logger }) => {
                 return false;
               }
 
-              // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
                 return 'Expected valid path to ca.pem file';
               }
@@ -50,6 +61,7 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
+    // Ask client.pem path
     askClientPemPath: [
       'askCaPemPath',
       ({}, cbk) => {
@@ -63,7 +75,6 @@ const askPaths = async ({ ask, logger }) => {
                 return false;
               }
 
-              // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
                 return 'Expected valid path to client.pem file';
               }
@@ -82,6 +93,7 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
+    // Ask client-key.pem path
     askClientKeyPemPath: [
       'askClientPemPath',
       ({}, cbk) => {
@@ -95,7 +107,6 @@ const askPaths = async ({ ask, logger }) => {
                 return false;
               }
 
-              // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
                 return 'Expected valid path to client-key.pem file';
               }
@@ -114,6 +125,7 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
+    // Ask the host:port
     askSocket: [
       'askClientKeyPemPath',
       ({}, cbk) => {
@@ -141,6 +153,7 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
+    // Ask saved node name
     askSavedNodeName: [
       'askSocket',
       ({}, cbk) => {
@@ -169,6 +182,7 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
+    // Ask if saved node is default
     askisDefault: [
       'askSavedNodeName',
       ({}, cbk) => {
@@ -186,7 +200,8 @@ const askPaths = async ({ ask, logger }) => {
       },
     ],
 
-    putCredentials: [
+    // Write credentials
+    writeCredentials: [
       'askCaPemPath',
       'askClientKeyPemPath',
       'askClientPemPath',

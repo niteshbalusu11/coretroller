@@ -14,6 +14,16 @@ const options = {
   oneofs: true,
 };
 
+/** Get Authenticated Lightning Object
+ *
+ * @param {
+ * node: <Saved Node String>
+ * }
+ * @returns {
+ * lightning: <Authenticated Core Lightning Object>
+ * }
+ */
+
 const authenticatedCoreLightning = async ({ node }) => {
   const credentials = await getSavedCredentials({ node });
 
@@ -22,9 +32,9 @@ const authenticatedCoreLightning = async ({ node }) => {
   const CLNService = loadPackageDefinition(packageDefinition).cln.Node;
   const sslCredentials = _credentials.createSsl(credentials.ca_cert, credentials.client_key, credentials.client_cert);
 
-  const client = new CLNService(credentials.socket, sslCredentials);
+  const lightning = new CLNService(credentials.socket, sslCredentials);
 
-  return client;
+  return { lightning };
 };
 
 export default authenticatedCoreLightning;

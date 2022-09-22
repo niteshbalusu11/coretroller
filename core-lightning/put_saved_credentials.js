@@ -9,9 +9,24 @@ const configFile = 'config.json';
 const credentialsFile = 'credentials.json';
 const stringify = obj => JSON.stringify(obj, null, 2);
 
+/** Writes credentials paths to disk
+ *
+ * @param {
+ * ca_cert_path: <Path to CA Cert File String>
+ * client_cert_path: <Path to Client Cert File String>
+ * client_key_path: <Path to Client Key File String>
+ * logger: <WinstonLoggerObject>
+ * socket: <gRPC Socket String>
+ * saved_node: <Saved Node String>
+ * }
+ *
+ * @returns
+ */
+
 const putSavedCredentials = async args => {
   return (
     await auto({
+      // Check arguments
       validate: cbk => {
         if (!args.ca_cert_path || !existsSync(args.ca_cert_path)) {
           return cbk(['400', 'ExpectedValidCaPathForSavingCredentials']);
@@ -40,6 +55,7 @@ const putSavedCredentials = async args => {
         return cbk();
       },
 
+      // Create the home directory
       makeHomeDir: [
         'validate',
         ({}, cbk) => {
@@ -56,6 +72,7 @@ const putSavedCredentials = async args => {
         },
       ],
 
+      // Create the saved node directory
       makeSavedNodeDir: [
         'makeHomeDir',
         ({}, cbk) => {
@@ -72,6 +89,7 @@ const putSavedCredentials = async args => {
         },
       ],
 
+      // Write the config.json file
       writeConfigFile: [
         'makeSavedNodeDir',
         ({}, cbk) => {
@@ -95,6 +113,7 @@ const putSavedCredentials = async args => {
         },
       ],
 
+      // Write the credentials.json file
       writeCredentialFile: [
         'makeSavedNodeDir',
         ({}, cbk) => {
@@ -117,12 +136,15 @@ const putSavedCredentials = async args => {
         },
       ],
 
+      // Validate the saved credentials
       validateCredentials: [
         'writeCredentialFile',
         async () => {
-          const client = await authenticatedCoreLightning({ node: !args.is_default ? args.saved_node : undefined });
+          const { lightning } = await authenticatedCoreLightning({
+            node: !args.is_default ? args.saved_node : undefined,
+          });
 
-          client.Getinfo({}, (err, info) => {
+          lightning.Getinfo({}, (err, info) => {
             if (!!err || !info) {
               throw new Error('400, UnexpectedErrorConnectingToCoreLightning', err);
             }
