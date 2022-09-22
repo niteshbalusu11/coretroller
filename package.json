@@ -1,0 +1,26 @@
+{
+  "name": "core-lightning-bos",
+  "bin": {
+    "cl": "cl.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "^0.1.0",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "@alexbosworth/caporal": "^1.4.4",
+    "@grpc/grpc-js": "^1.7.1",
+    "@grpc/proto-loader": "^0.7.3",
+    "async": "^3.2.4",
+    "commander": "^9.4.0",
+    "import-lazy": "^4.0.0",
+    "inquirer": "^9.1.2",
+    "winston": "^3.8.2"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Nitesh Balusu",
+  "license": "MIT",
+  "private": false
+}
