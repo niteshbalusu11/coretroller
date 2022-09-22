@@ -19,7 +19,8 @@
     "async": "^3.2.4",
     "commander": "^9.4.0",
     "import-lazy": "^4.0.0",
-    "inquirer": "^9.1.2"
+    "inquirer": "^9.1.2",
+    "pretty-error": "^4.0.0"
   },
   "version": "1.0.0",
   "main": "index.js",
