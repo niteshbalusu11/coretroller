@@ -7,8 +7,8 @@ const configFile = 'config.json';
 const credentialsFile = 'credentials.json';
 const { parse } = JSON;
 
-const getSavedCredentials = async ({ node }) => {
-  return (
+const getSavedCredentials = async ({ node }) =>
+  (
     await auto({
       forNode: cbk => {
         if (!!node) {
@@ -24,7 +24,6 @@ const getSavedCredentials = async ({ node }) => {
           }
 
           try {
-            console.log(res.toString());
             parse(res.toString());
           } catch (err) {
             return cbk([400, 'ExpectedValidConfigFileToGetCredentials', err]);
@@ -123,6 +122,5 @@ const getSavedCredentials = async ({ node }) => {
       ],
     })
   ).credentials;
-};
 
 export default getSavedCredentials;

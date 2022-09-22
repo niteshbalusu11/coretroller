@@ -33,7 +33,7 @@ const askPaths = async ({ ask, logger }) => {
 
               // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
-                return `Expected valid path to ca.pem file`;
+                return 'Expected valid path to ca.pem file';
               }
 
               return true;
@@ -65,7 +65,7 @@ const askPaths = async ({ ask, logger }) => {
 
               // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
-                return `Expected valid path to client.pem file`;
+                return 'Expected valid path to client.pem file';
               }
 
               return true;
@@ -97,7 +97,7 @@ const askPaths = async ({ ask, logger }) => {
 
               // The connect code should be entirely numeric, not an API key
               if (!existsSync(input)) {
-                return `Expected valid path to client-key.pem file`;
+                return 'Expected valid path to client-key.pem file';
               }
 
               return true;
@@ -174,7 +174,7 @@ const askPaths = async ({ ask, logger }) => {
       ({}, cbk) => {
         return ask(
           {
-            message: `Is this the default node?`,
+            message: 'Is this the default node?',
             name: 'ok',
             type: 'confirm',
             default: true,

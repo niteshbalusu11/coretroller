@@ -3,9 +3,13 @@
   "bin": {
     "cl": "cl.js"
   },
+  "scripts": {
+    "lint": "eslint \"**/*.js\" --fix"
+  },
   "type": "module",
   "devDependencies": {
     "bun-types": "^0.1.0",
+    "eslint": "^7.32.0 || ^8.2.0",
     "prettier": "^2.7.1"
   },
   "dependencies": {
@@ -15,8 +19,7 @@
     "async": "^3.2.4",
     "commander": "^9.4.0",
     "import-lazy": "^4.0.0",
-    "inquirer": "^9.1.2",
-    "winston": "^3.8.2"
+    "inquirer": "^9.1.2"
   },
   "version": "1.0.0",
   "main": "index.js",

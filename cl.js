@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-import { askPaths, authenticatedCoreLightning } from './core-lightning/index.js';
-
+import { askPaths } from './core-lightning/index.js';
 import { interrogate } from './commands/index.js';
 import prog from '@alexbosworth/caporal';
 import { readFileSync } from 'fs';
@@ -24,4 +23,5 @@ prog
     }
   });
 
+// eslint-disable-next-line no-undef
 prog.parse(process.argv);

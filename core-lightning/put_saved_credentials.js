@@ -45,7 +45,7 @@ const putSavedCredentials = async args => {
         ({}, cbk) => {
           const { path } = homePath({});
 
-          mkdir(path, (err, res) => {
+          mkdir(path, err => {
             // Ignore errors, the directory may already exist
             if (!!err) {
               return cbk();
@@ -61,7 +61,7 @@ const putSavedCredentials = async args => {
         ({}, cbk) => {
           const { path } = homePath({ file: args.saved_node });
 
-          mkdir(path, (err, res) => {
+          mkdir(path, err => {
             // Ignore errors, the directory may already exist
             if (!!err) {
               return cbk();
@@ -85,7 +85,7 @@ const putSavedCredentials = async args => {
             default_saved_node: args.saved_node,
           });
 
-          writeFile(path, data, (err, res) => {
+          writeFile(path, data, err => {
             if (!!err) {
               return cbk([400, 'UnexpectedErrorWritingConfigFile', err]);
             }
@@ -107,7 +107,7 @@ const putSavedCredentials = async args => {
             socket: args.socket,
           });
 
-          writeFile(path, data, (err, res) => {
+          writeFile(path, data, err => {
             if (!!err) {
               return cbk([400, 'UnexpectedErrorWritingCredentialsFile', { err }]);
             }
