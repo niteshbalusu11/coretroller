@@ -19,6 +19,7 @@ const options = {
  * @param {
  * node: <Saved Node String>
  * }
+ *
  * @returns {
  * lightning: <Authenticated Core Lightning Object>
  * }

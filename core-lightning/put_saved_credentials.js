@@ -19,8 +19,6 @@ const stringify = obj => JSON.stringify(obj, null, 2);
  * socket: <gRPC Socket String>
  * saved_node: <Saved Node String>
  * }
- *
- * @returns
  */
 
 const putSavedCredentials = async args => {

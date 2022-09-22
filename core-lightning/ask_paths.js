@@ -10,8 +10,6 @@ const defaultSavedNodeName = 'coreln';
  * ask: <InquirerAskFunction>
  * logger: <WinstonLoggerObject>
  * }
- *
- * @returns
  */
 
 const askPaths = async ({ ask, logger }) => {
