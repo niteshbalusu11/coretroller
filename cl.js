@@ -38,11 +38,11 @@ prog
   .action(async (args, options, logger) => {
     try {
       const result = await getBalance({
-        lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
         is_confirmed: !!options.confirmed,
         is_detailed: !!options.detailed,
         is_offchain_only: !!options.offchain,
         is_onchain_only: !!options.onchain,
+        lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
       });
 
       return logger.info(result);
