@@ -15,19 +15,6 @@ const loadJSON = path => JSON.parse(readFileSync(new URL(path, import.meta.url))
 prog
   .version(loadJSON('./package.json').version)
 
-  .command('connect', 'Connect a new node')
-  .help('Connect and authenticate to a core lightning node')
-  .action(async (args, options, logger) => {
-    try {
-      return await askPaths({
-        logger,
-        ask: await interrogate({}),
-      });
-    } catch (err) {
-      throw new Error(pe.render(err));
-    }
-  })
-
   .command('balance', 'Get total tokens')
   .help('Sums balances on-chain, in channels, and pending, plus commit fees')
   .option('--confirmed', 'Return confirmed funds only')
@@ -46,6 +33,19 @@ prog
       });
 
       return logger.info(result);
+    } catch (err) {
+      throw new Error(pe.render(err));
+    }
+  })
+
+  .command('connect', 'Connect a new node')
+  .help('Connect and authenticate to a core lightning node')
+  .action(async (args, options, logger) => {
+    try {
+      return await askPaths({
+        logger,
+        ask: await interrogate({}),
+      });
     } catch (err) {
       throw new Error(pe.render(err));
     }
