@@ -7,3 +7,4 @@ Dockerfile
 yarn-error.log
 LICENSE
 README.md
+.yarn
