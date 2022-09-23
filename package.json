@@ -1,15 +1,14 @@
 {
   "name": "coretroller",
   "bin": {
-    "cl": "cl.js"
+    "ctrl": "ctrl.js"
   },
   "scripts": {
     "lint": "eslint \"**/*.js\" --fix"
   },
   "type": "module",
   "devDependencies": {
-    "bun-types": "^0.1.0",
-    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint": "^8.23.1",
     "prettier": "^2.7.1"
   },
   "dependencies": {

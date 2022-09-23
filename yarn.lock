@@ -457,13 +457,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bun-types@npm:^0.1.0":
-  version: 0.1.11
-  resolution: "bun-types@npm:0.1.11"
-  checksum: d08326041453689503223cba8420d5aaaa2eee640597c206f1e595e1b06ce4e0460b18fe082f64e1802bd901c3343e22d8dda0b11188ced4e6a8fd2aae3f68f0
-  languageName: node
-  linkType: hard
-
 "callsites@npm:^3.0.0":
   version: 3.1.0
   resolution: "callsites@npm:3.1.0"
@@ -674,16 +667,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-lightning-bos@workspace:.":
+"core-util-is@npm:~1.0.0":
+  version: 1.0.3
+  resolution: "core-util-is@npm:1.0.3"
+  checksum: 9de8597363a8e9b9952491ebe18167e3b36e7707569eed0ebf14f8bba773611376466ae34575bca8cfe3c767890c859c74056084738f09d4e4a6f902b2ad7d99
+  languageName: node
+  linkType: hard
+
+"coretroller@workspace:.":
   version: 0.0.0-use.local
-  resolution: "core-lightning-bos@workspace:."
+  resolution: "coretroller@workspace:."
   dependencies:
     "@alexbosworth/caporal": ^1.4.4
     "@grpc/grpc-js": ^1.7.1
     "@grpc/proto-loader": ^0.7.3
     async: ^3.2.4
-    bun-types: ^0.1.0
-    eslint: ^7.32.0 || ^8.2.0
+    eslint: ^8.23.1
     inquirer: ^9.1.2
     prettier: ^2.7.1
     pretty-error: ^4.0.0
@@ -691,13 +690,6 @@ __metadata:
     cl: cl.js
   languageName: unknown
   linkType: soft
-
-"core-util-is@npm:~1.0.0":
-  version: 1.0.3
-  resolution: "core-util-is@npm:1.0.3"
-  checksum: 9de8597363a8e9b9952491ebe18167e3b36e7707569eed0ebf14f8bba773611376466ae34575bca8cfe3c767890c859c74056084738f09d4e4a6f902b2ad7d99
-  languageName: node
-  linkType: hard
 
 "cross-spawn@npm:^7.0.2":
   version: 7.0.3
@@ -937,7 +929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.32.0 || ^8.2.0":
+"eslint@npm:^8.23.1":
   version: 8.23.1
   resolution: "eslint@npm:8.23.1"
   dependencies:
