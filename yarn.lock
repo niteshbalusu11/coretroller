@@ -687,7 +687,7 @@ __metadata:
     prettier: ^2.7.1
     pretty-error: ^4.0.0
   bin:
-    cl: cl.js
+    ctrl: ctrl.js
   languageName: unknown
   linkType: soft
 
