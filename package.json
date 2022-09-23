@@ -1,5 +1,5 @@
 {
-  "name": "core-lightning-bos",
+  "name": "coretroller",
   "bin": {
     "cl": "cl.js"
   },
