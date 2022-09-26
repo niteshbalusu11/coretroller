@@ -42,6 +42,7 @@ prog
 
       return returnObject({ logger, result });
     } catch (err) {
+      logger.error(err);
       throw new Error(pe.render(err));
     }
   })
@@ -56,6 +57,7 @@ prog
         ask: await interrogate({}),
       });
     } catch (err) {
+      logger.error(err);
       throw new Error(pe.render(err));
     }
   })
@@ -81,6 +83,7 @@ prog
 
       return returnObject({ logger, result });
     } catch (err) {
+      logger.error(err);
       throw new Error(pe.render(err));
     }
   });
