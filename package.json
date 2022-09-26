@@ -22,7 +22,8 @@
   "devDependencies": {
     "eslint": "^8.23.1",
     "eslint-plugin-node": "latest",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "standard-version": "^9.5.0"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -42,7 +43,11 @@
     "url": "https://github.com/niteshbalusu11/coretroller"
   },
   "scripts": {
-    "lint": "eslint \"**/*.js\" --fix"
+    "lint": "eslint \"**/*.js\" --fix",
+    "push:github": "git push --follow-tags origin master",
+    "release": "standard-version --release-as minor && npm publish",
+    "release:major": "standard-version --release-as major && npm publish",
+    "release:patch": "standard-version --release-as patch && npm publish"
   },
   "type": "module",
   "version": "1.0.0"
