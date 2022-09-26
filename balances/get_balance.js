@@ -9,7 +9,7 @@ const sumOf = (m, n) => m + n;
 /** Get offchain and onchain balances
  *
  * @param {
- * lightning: <Authenticated Core Lightning Object>
+ * lightning: <Authenticated CL API Object>
  * [is_detailed]: <Is Detailed Balance Bool>
  * [is_offchain_only]: <Is Offchain Balance Bool>
  * [is_onchain_only]: <Is Onchain Only Bool>

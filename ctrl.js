@@ -6,6 +6,7 @@ import { mkdir, readFile, writeFile } from 'fs';
 import PrettyError from 'pretty-error';
 import { adjustTags } from './nodes/index.js';
 import { getBalance } from './balances/index.js';
+import { getDepositAddress } from './chain/index.js';
 import { interrogate } from './commands/index.js';
 import prog from '@alexbosworth/caporal';
 import { readFileSync } from 'fs';
@@ -13,7 +14,7 @@ import { returnObject } from './responses/index.js';
 
 const { BOOL } = prog;
 const flatten = arr => [].concat(...arr);
-
+const { INT } = prog;
 const pe = new PrettyError();
 const { REPEATABLE } = prog;
 
@@ -38,6 +39,27 @@ prog
         is_offchain_only: !!options.offchain,
         is_onchain_only: !!options.onchain,
         lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
+      });
+
+      return returnObject({ logger, result });
+    } catch (err) {
+      logger.error(err);
+      throw new Error(pe.render(err));
+    }
+  })
+
+  // Deposit coins
+  .command('chain-deposit', 'Deposit coins in the on-chain wallet')
+  .help('--format address types supported: np2wpkh, p2tr, p2wpkh (default)')
+  .argument('[amount]', 'Amount to receive', INT)
+  .option('--format <format>', 'Address type', ['np2wpkh', 'p2wpkh'])
+  .option('--node <node_name>', 'Node to deposit coins to')
+  .action(async (args, options, logger) => {
+    try {
+      const result = await getDepositAddress({
+        format: options.format || undefined,
+        lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
+        tokens: args.amount,
       });
 
       return returnObject({ logger, result });
@@ -88,5 +110,4 @@ prog
     }
   });
 
-// eslint-disable-next-line no-undef
 prog.parse(process.argv);
