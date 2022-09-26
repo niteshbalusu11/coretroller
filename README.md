@@ -44,6 +44,9 @@ ctrl chain-deposit
 
 # Connect to core-lightning
 ctrl connect
+
+# Tags can be used in other commands via tag and avoid options
+bos tags
 ```
 
 
