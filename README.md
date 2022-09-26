@@ -46,7 +46,7 @@ ctrl chain-deposit
 ctrl connect
 
 # Tags can be used in other commands via tag and avoid options
-bos tags
+ctrl tags
 ```
 
 
