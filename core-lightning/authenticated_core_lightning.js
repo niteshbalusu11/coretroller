@@ -1,11 +1,10 @@
 import { credentials as _credentials, loadPackageDefinition } from '@grpc/grpc-js';
 
-import { cwd } from 'process';
 import getSavedCredentials from './get_saved_credentials.js';
 import { join } from 'path';
 import { loadSync } from '@grpc/proto-loader';
 
-const PROTO_PATH = join(cwd(), 'core-lightning', 'proto', 'node.proto');
+const PROTO_PATH = join(process.cwd(), 'core-lightning', 'proto', 'node.proto');
 const options = {
   keepCase: true,
   longs: String,

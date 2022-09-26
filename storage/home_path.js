@@ -1,7 +1,7 @@
 import { homedir } from 'os';
 import { join } from 'path';
 
-const home = join(...[homedir(), '.corebos']);
+const home = join(...[homedir(), '.ctrl']);
 
 /** Writes credentials paths to disk
  *
