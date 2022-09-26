@@ -37,7 +37,6 @@
   "license": "MIT",
   "main": "index.js",
   "name": "coretroller",
-  "packageManager": "yarn@3.2.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/niteshbalusu11/coretroller"
