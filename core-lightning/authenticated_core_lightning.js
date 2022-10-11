@@ -14,14 +14,14 @@ const options = {
 };
 
 /** Get Authenticated Lightning Object
- *
- * @param {
- * node: <Saved Node String>
- * }
- *
- * @returns {
- * lightning: <Authenticated Core Lightning Object>
- * }
+  {
+  node: <Saved Node String>
+  }
+ 
+  @Returns via Promise 
+  {
+  lightning: <Authenticated Core Lightning Object>
+  }
  */
 
 const authenticatedCoreLightning = async ({ node }) => {

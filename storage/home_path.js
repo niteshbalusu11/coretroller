@@ -4,14 +4,14 @@ import { join } from 'path';
 const home = join(...[homedir(), '.ctrl']);
 
 /** Writes credentials paths to disk
- *
- * @param {
- * file: <File Name String>
- * }
- *
- * @returns {
- * path: <Joined Path String>
- * }
+  {
+    file: <File Name String>
+  }
+ 
+  @Returns via Promise
+  {
+    path: <Joined Path String>
+  }
  */
 
 const homePath = ({ file }) => {

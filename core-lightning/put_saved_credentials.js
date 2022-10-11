@@ -10,15 +10,16 @@ const credentialsFile = 'credentials.json';
 const stringify = obj => JSON.stringify(obj, null, 2);
 
 /** Writes credentials paths to disk
- *
- * @param {
- * ca_cert_path: <Path to CA Cert File String>
- * client_cert_path: <Path to Client Cert File String>
- * client_key_path: <Path to Client Key File String>
- * logger: <WinstonLoggerObject>
- * socket: <gRPC Socket String>
- * saved_node: <Saved Node String>
- * }
+  {
+  ca_cert_path: <Path to CA Cert File String>
+  client_cert_path: <Path to Client Cert File String>
+  client_key_path: <Path to Client Key File String>
+  logger: <WinstonLoggerObject>
+  socket: <gRPC Socket String>
+  saved_node: <Saved Node String>
+  }
+
+  @Returns via Promise
  */
 
 const putSavedCredentials = async args => {

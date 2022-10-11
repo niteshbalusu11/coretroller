@@ -5,11 +5,13 @@ import putSavedCredentials from './put_saved_credentials.js';
 const defaultSavedNodeName = 'coreln';
 
 /** Ask for paths to save credentials
- *
- * @param {
- * ask: <InquirerAskFunction>
- * logger: <WinstonLoggerObject>
- * }
+ 
+  {
+    ask: <InquirerAskFunction>
+    logger: <WinstonLoggerObject>
+  }
+
+  @Returns via Promise
  */
 
 const askPaths = async ({ ask, logger }) => {

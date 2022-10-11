@@ -8,17 +8,18 @@ const credentialsFile = 'credentials.json';
 const { parse } = JSON;
 
 /** Get saved credentials from disk
- *
- * @param {
- * node: <Saved Node String>
- * }
- *
- * @returns {
- * ca_cert: <CA Cert File Buffer>
- * client_cert: <Client Cert File Buffer>
- * client_key: <Client Key File Buffer>
- * socket: <Socket String>
- * }
+ 
+  {
+    node: <Saved Node String>
+  }
+ 
+  @Returns via Promise 
+  {
+    ca_cert: <CA Cert File Buffer>
+    client_cert: <Client Cert File Buffer>
+    client_key: <Client Key File Buffer>
+    socket: <Socket String>
+  }
  */
 
 const getSavedCredentials = async ({ node }) =>

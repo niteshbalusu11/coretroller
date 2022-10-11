@@ -1,11 +1,4 @@
-// const { getBorderCharacters } = require('table');
-
 import { table as renderTable } from 'table';
-
-// const renderTable = require('table').table;
-// import renderTable from 'table';
-
-// const border = getBorderCharacters('norc');
 const emptyCell = ' ';
 const { isArray } = Array;
 const summary = n => `${n}_summary`;
