@@ -52,5 +52,5 @@
     "release:patch": "standard-version --release-as patch && npm publish"
   },
   "type": "module",
-  "version": "0.1.1"
+  "version": "1.0.0"
 }
