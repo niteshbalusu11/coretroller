@@ -1,4 +1,5 @@
 import { auto } from 'async';
+import { newAddr } from '../core-lightning/methods.js';
 import qrcode from 'qrcode-terminal';
 const bigTok = tokens => (!tokens ? '0' : (tokens / 1e8).toFixed(8));
 
@@ -21,7 +22,7 @@ const getDepositAddress = async args => {
     await auto({
       // Check arguments
       validate: cbk => {
-        if (!args.lightning) {
+        if (!args.ln) {
           return cbk([400, 'ExpectedAuthenticatedCoreLightningObjectToCreateNewAddress']);
         }
 
@@ -33,30 +34,30 @@ const getDepositAddress = async args => {
         'validate',
         ({}, cbk) => {
           if (args.format === 'p2wpkh') {
-            return cbk(null, 0);
+            return cbk(null, 'bech32');
           }
 
           if (args.format === 'np2wpkh') {
-            return cbk(null, 1);
+            return cbk(null, 'p2sh-segwit');
           }
 
-          return cbk(null, 0);
+          return cbk(null, 'bech32');
         },
       ],
 
       // Create new address
       newAddress: [
         'validate',
-        ({ addresstype }, cbk) => {
-          return args.lightning.NewAddr({ addresstype }, cbk);
+        async ({ addresstype }) => {
+          return await newAddr({ ln: args.ln, params: { addresstype } });
         },
       ],
 
       qr: [
         'newAddress',
         ({ newAddress }, cbk) => {
-          const url = `bitcoin:${newAddress.bech32 || newAddress.p2sh_segwit}?amount=${bigTok(args.tokens)}`;
-          console.log(url);
+          const url = `bitcoin:${newAddress.bech32 || newAddress['p2sh-segwit']}?amount=${bigTok(args.tokens)}`;
+
           return qrcode.generate(url, { small: true }, code => cbk(null, code));
         },
       ],
@@ -67,7 +68,7 @@ const getDepositAddress = async args => {
         'qr',
         ({ newAddress, qr }, cbk) => {
           return cbk(null, {
-            deposit_address: newAddress.bech32 || newAddress.p2sh_segwit,
+            deposit_address: newAddress.bech32 || newAddress['p2sh-segwit'],
             deposit_qr: qr,
           });
         },

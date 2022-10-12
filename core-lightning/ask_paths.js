@@ -7,7 +7,7 @@ const defaultSavedNodeName = 'coreln';
 /** Ask for paths to save credentials
  
   {
-    ask: <InquirerAskFunction>
+    ask: <Inquirer Ask Function>
     logger: <WinstonLoggerObject>
   }
 

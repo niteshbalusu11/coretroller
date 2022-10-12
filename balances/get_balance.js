@@ -1,9 +1,10 @@
 import { auto } from 'async';
+import { listFunds } from '../core-lightning/methods.js';
 
-const confirmedStatus = 'CONFIRMED';
-const mtokensAsTokens = n => Math.floor(n / 1000);
+const confirmedStatus = 'confirmed';
+const closedStatus = 'ONCHAIN';
 const none = 0;
-const normalStatus = 'channeldnormal';
+const normalStatus = 'CHANNELD_NORMAL';
 const sumOf = (m, n) => m + n;
 
 /** Get offchain and onchain balances
@@ -28,7 +29,7 @@ const getBalance = async args => {
     await auto({
       // Check arguments
       validate: cbk => {
-        if (!args.lightning) {
+        if (!args.ln) {
           return cbk([400, 'ExpectedAuthenticatedCoreLightningObjectToGetBalance']);
         }
 
@@ -38,14 +39,8 @@ const getBalance = async args => {
       // List outputs and channels
       listFunds: [
         'validate',
-        ({}, cbk) => {
-          args.lightning.listFunds({}, (err, res) => {
-            if (!!err) {
-              return cbk(err);
-            }
-
-            return cbk(null, res);
-          });
+        async () => {
+          return await listFunds({ ln: args.ln, params: undefined });
         },
       ],
 
@@ -60,15 +55,15 @@ const getBalance = async args => {
           if (!!args.is_confirmed) {
             const balance = listFunds.outputs
               .filter(n => n.status === confirmedStatus)
-              .map(n => Number(n.amount_msat.msat))
+              .map(n => n.value)
               .reduce((sum, n) => sum + n, 0);
 
-            return cbk(null, mtokensAsTokens(balance));
+            return cbk(null, balance);
           }
 
-          const balance = listFunds.outputs.map(n => Number(n.amount_msat.msat)).reduce((sum, n) => sum + n, 0);
+          const balance = listFunds.outputs.map(n => n.value).reduce((sum, n) => sum + n, 0);
 
-          return cbk(null, mtokensAsTokens(balance));
+          return cbk(null, balance);
         },
       ],
 
@@ -82,16 +77,19 @@ const getBalance = async args => {
 
           if (!!args.is_confirmed) {
             const balance = listFunds.channels
-              .filter(n => n.state.toLowerCase() === normalStatus)
-              .map(n => Number(n.our_amount_msat.msat))
+              .filter(n => n.state === normalStatus)
+              .map(n => n.channel_sat)
               .reduce((sum, n) => sum + n, 0);
 
-            return cbk(null, mtokensAsTokens(balance));
+            return cbk(null, balance);
           }
 
-          const balance = listFunds.channels.map(n => Number(n.our_amount_msat.msat)).reduce((sum, n) => sum + n, 0);
+          const balance = listFunds.channels
+            .filter(n => n.state !== closedStatus)
+            .map(n => n.channel_sat)
+            .reduce((sum, n) => sum + n, 0);
 
-          return cbk(null, mtokensAsTokens(balance));
+          return cbk(null, balance);
         },
       ],
 

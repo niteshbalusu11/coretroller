@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { askPaths, authenticatedCoreLightning } from './core-lightning/index.js';
+import { askLnSocketCredentials, authenticatedLn } from './core-lightning/index.js';
 import { mkdir, readFile, writeFile } from 'fs';
 
 import PrettyError from 'pretty-error';
@@ -33,14 +33,17 @@ prog
   .option('--onchain', 'List only on-chain tokens')
   .action(async (args, options, logger) => {
     try {
+      const ln = (await authenticatedLn({ node: options.node })).ln;
+
       const result = await getBalance({
+        ln,
         is_confirmed: !!options.confirmed,
         is_detailed: !!options.detailed,
         is_offchain_only: !!options.offchain,
         is_onchain_only: !!options.onchain,
-        lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
       });
 
+      ln.destroy();
       return returnObject({ logger, result });
     } catch (err) {
       logger.error(err);
@@ -56,12 +59,15 @@ prog
   .option('--node <node_name>', 'Node to deposit coins to')
   .action(async (args, options, logger) => {
     try {
+      const ln = (await authenticatedLn({ node: options.node })).ln;
+
       const result = await getDepositAddress({
+        ln,
         format: options.format || undefined,
-        lightning: (await authenticatedCoreLightning({ node: options.node })).lightning,
         tokens: args.amount,
       });
 
+      ln.destroy();
       return returnObject({ logger, result });
     } catch (err) {
       logger.error(err);
@@ -74,7 +80,7 @@ prog
   .help('Connect and authenticate to a core lightning node')
   .action(async (args, options, logger) => {
     try {
-      return await askPaths({
+      return await askLnSocketCredentials({
         logger,
         ask: await interrogate({}),
       });
