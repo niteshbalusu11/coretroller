@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'fs';
 
 import authenticatedLn from './authenticated_ln.js';
 import { auto } from 'async';
+import { getInfo } from './methods.js';
 import { homePath } from '../storage/index.js';
 import { join } from 'path';
 
@@ -133,11 +134,13 @@ const putLnSocketCredentials = async args => {
       validateCredentials: [
         'writeCredentialFile',
         async () => {
-          const { ln } = await authenticatedLn({
-            node: !args.is_default ? args.saved_node : undefined,
-          });
+          const ln = (
+            await authenticatedLn({
+              node: !args.is_default ? args.saved_node : undefined,
+            })
+          ).ln;
 
-          const result = await ln.api({ method: 'getinfo' });
+          const result = await getInfo({ ln, params: undefined });
 
           ln.destroy();
 
