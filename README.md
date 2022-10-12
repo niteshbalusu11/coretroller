@@ -22,7 +22,8 @@ ctrl --version
 ``` 
 
 ## Setup
-Run the `ctrl connect` command and follow instructions to enter paths to certificates and gRPC port details.
+Run the `ctrl connect` command and follow instructions to enter commando rune and socket details.
+It connects over LN P2P port which is usually 9735. So the socket would be your `publicIP:P2PPort`. Example: `192.168.11.21:9735`.
 
 Example setup:
   ![Balanced Channel Open](./public/ctrl_setup_screenshot.png)
