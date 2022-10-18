@@ -1,3 +1,4 @@
+import fetchRequest from './fetch_request.js';
 import interrogate from './interrogate.js';
 
-export { interrogate };
+export { fetchRequest, interrogate };

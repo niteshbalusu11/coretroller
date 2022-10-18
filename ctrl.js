@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 import { askLnSocketCredentials, authenticatedLn } from './core-lightning/index.js';
-import { mkdir, readFile, writeFile } from 'fs';
+import { fetchRequest, interrogate } from './commands/index.js';
+import { mkdir, readFile, statSync, writeFile } from 'fs';
 
 import PrettyError from 'pretty-error';
 import { adjustTags } from './nodes/index.js';
+import { connectToTelegram } from './telegram/index.js';
+import fetch from '@alexbosworth/node-fetch';
 import { getBalance } from './balances/index.js';
 import { getDepositAddress } from './chain/index.js';
-import { interrogate } from './commands/index.js';
 import prog from '@alexbosworth/caporal';
 import { readFileSync } from 'fs';
 import { returnObject } from './responses/index.js';
@@ -107,6 +109,47 @@ prog
         is_avoided: options.avoid,
         remove: flatten([options.remove].filter(n => !!n)),
         tag: !!args.tag ? args.tag.toLowerCase() : undefined,
+      });
+
+      return returnObject({ logger, result });
+    } catch (err) {
+      logger.error(err);
+      throw new Error(pe.render(err));
+    }
+  })
+
+  // Link up Telegram bot
+  .command('telegram', 'Post updates to a Telegram bot')
+  .help('Connect to a Telegram bot. Create bot: tg://resolve?domain=botfather')
+  .help('After creating the bot start chatting with the bot for connect code')
+  .help('Supported updates: forwards, received payments, etc')
+  .help('Multiple nodes are supported by repeating the `--node` flag')
+  .help('See README for info on persisting the bot through Docker/nohup')
+  .help('--use-proxy requires path to JSON file for host/password/port/userId')
+  .option('--connect <connect_code>', 'Connection code from /connect')
+  .option('--ignore-forwards-below <amount>', 'Ignore forwards of value', INT)
+  .option('--node <node_name>', 'Node to connect to Telegram', REPEATABLE)
+  .option('--reset-api-key', 'Reset the Telegram API key')
+  .option('--use-proxy <path>', 'Proxy agent to connect to Telegram')
+  .option('--use-small-units', 'Avoid showing leading zeros on amounts')
+  .action(async (args, options, logger) => {
+    try {
+      const result = await connectToTelegram({
+        logger,
+        ask: await interrogate({}),
+        fs: {
+          writeFile,
+          getFile: readFile,
+          getFileStatus: statSync,
+          is_reset_state: options.resetApiKey || undefined,
+          makeDirectory: mkdir,
+        },
+        id: options.connect,
+        is_small_units: options.useSmallUnits || undefined,
+        min_forward_tokens: options.ignoreForwardsBelow || undefined,
+        nodes: flatten([options.node].filter(n => !!n)),
+        proxy: options.useProxy || undefined,
+        request: fetchRequest({ fetch }),
       });
 
       return returnObject({ logger, result });
