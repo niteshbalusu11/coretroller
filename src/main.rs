@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Context};
 use cln_rpc::{model::GetinfoRequest, ClnRpc, Request};
-use std::{path::Path, env::args};
+use std::{env::args, path::Path};
 use tokio;
 
 #[tokio::main]
@@ -13,7 +13,7 @@ async fn main() -> Result<(), anyhow::Error> {
         .call(Request::Getinfo(GetinfoRequest {}))
         .await
         .map_err(|e| anyhow!("Error calling getinfo: {:?}", e))?;
-    
+
     println!("{}", serde_json::to_string_pretty(&response)?);
     Ok(())
 }
